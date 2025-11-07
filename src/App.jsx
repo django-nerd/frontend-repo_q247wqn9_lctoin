@@ -1,28 +1,35 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react';
+import Navbar from './components/Navbar';
+import Hero from './components/Hero';
+import { About, Skills, Timeline, Projects, Achievements, Contact } from './components/Sections';
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [isDark, setIsDark] = useState(true);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (isDark) {
+      root.classList.add('dark');
+      root.style.setProperty('--bg', '#001F3F');
+    } else {
+      root.classList.remove('dark');
+      root.style.setProperty('--bg', '#f7fafc');
+    }
+  }, [isDark]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">
-          Vibe Coding Platform
-        </h1>
-        <p className="text-gray-600 mb-6">
-          Your AI-powered development environment
-        </p>
-        <div className="text-center">
-          <button
-            onClick={() => setCount(count + 1)}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
-          >
-            Count is {count}
-          </button>
-        </div>
-      </div>
+    <div className="min-h-screen bg-[#001F3F] text-white selection:bg-cyan-300/30">
+      <Navbar isDark={isDark} setIsDark={setIsDark} />
+      <main className="pt-16">
+        <Hero />
+        <About />
+        <Skills />
+        <Timeline />
+        <Projects />
+        <Achievements />
+        <Contact />
+      </main>
+      <footer className="py-8 text-center text-white/60">© {new Date().getFullYear()} Pragya Soni. All rights reserved.</footer>
     </div>
-  )
+  );
 }
-
-export default App
